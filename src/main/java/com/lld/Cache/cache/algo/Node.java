@@ -7,10 +7,10 @@ private Node<Key> next;
   private Node<Key> prev;
   private Key key;
   
-  public Node(Node<Key> next, Node<Key> prev, Key key)
+  public Node(Key key)
   {
-	  this.next = next;
-	  this.prev = prev;
+	  this.next = null;
+	  this.prev = null;
 	  this.key = key;
   }
   

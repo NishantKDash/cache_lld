@@ -21,11 +21,7 @@ public class LRUCacheEvictionPolicy<Key> implements CacheEvictionPolicy<Key> {
         if(head.getNext() != null)
         {
         	Node<Key> toBeDeleted = head.getNext();
-            Node<Key> next = toBeDeleted.getNext();
-            toBeDeleted.setPrev(null);
-            toBeDeleted.setNext(null);
-            head.setNext(next);
-            next.setPrev(head);
+            dll.removeNode(toBeDeleted);
             map.remove(toBeDeleted.getKey());
             return toBeDeleted.getKey();
         }

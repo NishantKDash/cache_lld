@@ -21,14 +21,14 @@ public class DoublyLinkedList<Key> {
 	}
 
 	public DoublyLinkedList() {
-		Node<Key> newNode = new Node<Key>(null, null, null);
+		Node<Key> newNode = new Node<Key>(null);
 		this.head = newNode;
 		this.tail = newNode;
 
 	}
 
 	public Node<Key> addNode(Key key) {
-		Node<Key> newNode = new Node<Key>(null, null, key);
+		Node<Key> newNode = new Node<Key>(key);
 		tail.setNext(newNode);
 		newNode.setPrev(tail);
 		tail = newNode;
@@ -36,10 +36,15 @@ public class DoublyLinkedList<Key> {
 	}
 
 	public void removeNode(Node<Key> node) {
+		if(node == this.head)
+			return;
 		Node<Key> prev = node.getPrev();
 		Node<Key> next = node.getNext();
 		prev.setNext(next);
+		if(next != null)
 		next.setPrev(prev);
+		node.setNext(null);
+		node.setPrev(null);
 	}
 
 	public void updateNode(Node<Key> node) {
