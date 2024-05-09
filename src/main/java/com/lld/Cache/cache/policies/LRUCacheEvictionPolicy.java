@@ -9,7 +9,7 @@ import com.lld.Cache.cache.algo.Node;
 public class LRUCacheEvictionPolicy<Key> implements CacheEvictionPolicy<Key> {
 
 	private DoublyLinkedList<Key> dll;
-	private Map<Key,Node<Key>> map;
+	private Map<Key, Node<Key>> map;
 
 	public LRUCacheEvictionPolicy() {
 		this.dll = new DoublyLinkedList<>();
@@ -17,21 +17,20 @@ public class LRUCacheEvictionPolicy<Key> implements CacheEvictionPolicy<Key> {
 	}
 
 	public Key evict() {
-        Node<Key> head = dll.getHead();
-        if(head.getNext() != null)
-        {
-        	Node<Key> toBeDeleted = head.getNext();
-            dll.removeNode(toBeDeleted);
-            map.remove(toBeDeleted.getKey());
-            return toBeDeleted.getKey();
-        }
-        return null;
+		Node<Key> head = dll.getHead();
+		if (head.getNext() != null) {
+			Node<Key> toBeDeleted = head.getNext();
+			dll.removeNode(toBeDeleted);
+			map.remove(toBeDeleted.getKey());
+			return toBeDeleted.getKey();
+		}
+		return null;
 	}
 
 	@Override
 	public void update(Key key) {
-         Node<Key> node = map.get(key);
-         dll.updateNode(node);
+		Node<Key> node = map.get(key);
+		dll.updateNode(node);
 	}
 
 	@Override
@@ -41,7 +40,17 @@ public class LRUCacheEvictionPolicy<Key> implements CacheEvictionPolicy<Key> {
 		map.put(newNode.getKey(), newNode);
 		return newNode;
 	}
-	
-	
+
+	public Key getRecent() {
+		if (dll.getHead().getNext() == null)
+			return null;
+		return dll.getTail().getKey();
+	}
+
+	public Key getOldest() {
+		if (dll.getHead().getNext() == null)
+			return null;
+		return dll.getHead().getNext().getKey();
+	}
 
 }
